@@ -1,6 +1,6 @@
 package students
 
-import "github.com/raphael-foliveira/hot_reload/programminglanguages"
+import "github.com/raphael-foliveira/chi_routing/programminglanguages"
 
 type StudentDetailed struct {
 	Id                   int                                        `json:"id"`

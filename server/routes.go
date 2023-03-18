@@ -3,9 +3,9 @@ package server
 import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"github.com/raphael-foliveira/hot_reload/programminglanguages"
-	"github.com/raphael-foliveira/hot_reload/root"
-	"github.com/raphael-foliveira/hot_reload/students"
+	"github.com/raphael-foliveira/chi_routing/programminglanguages"
+	"github.com/raphael-foliveira/chi_routing/root"
+	"github.com/raphael-foliveira/chi_routing/students"
 )
 
 func getMainRouter() *chi.Mux {

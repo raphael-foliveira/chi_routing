@@ -6,7 +6,7 @@ import (
 
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
-	"github.com/raphael-foliveira/hot_reload/database"
+	"github.com/raphael-foliveira/chi_routing/database"
 )
 
 func Run() {

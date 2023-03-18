@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/raphael-foliveira/hot_reload/database"
-	"github.com/raphael-foliveira/hot_reload/server"
+	"github.com/raphael-foliveira/chi_routing/database"
+	"github.com/raphael-foliveira/chi_routing/server"
 )
 
 func main() {

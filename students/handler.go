@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi"
-	"github.com/raphael-foliveira/hot_reload/utils"
+	"github.com/raphael-foliveira/chi_routing/utils"
 )
 
 func ListHandler(w http.ResponseWriter, r *http.Request) {

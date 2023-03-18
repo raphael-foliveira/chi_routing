@@ -1,7 +1,7 @@
 package programminglanguages
 
 import (
-	"github.com/raphael-foliveira/hot_reload/database"
+	"github.com/raphael-foliveira/chi_routing/database"
 )
 
 func FindAll() []ProgrammingLanguage {

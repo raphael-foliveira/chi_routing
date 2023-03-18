@@ -3,7 +3,7 @@ package root
 import (
 	"net/http"
 
-	"github.com/raphael-foliveira/hot_reload/utils"
+	"github.com/raphael-foliveira/chi_routing/utils"
 )
 
 func GetRoot(w http.ResponseWriter, r *http.Request) {

@@ -1,8 +1,8 @@
 package students
 
 import (
-	"github.com/raphael-foliveira/hot_reload/database"
-	"github.com/raphael-foliveira/hot_reload/programminglanguages"
+	"github.com/raphael-foliveira/chi_routing/database"
+	"github.com/raphael-foliveira/chi_routing/programminglanguages"
 )
 
 func FindAll() []Student {
