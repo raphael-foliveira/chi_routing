@@ -1,31 +1,35 @@
 package programminglanguages
 
 import (
-	"encoding/json"
 	"net/http"
 
 	"github.com/go-chi/chi"
+	"github.com/raphael-foliveira/chi_routing/utils"
 )
 
 func ListHandler(w http.ResponseWriter, r *http.Request) {
 	pls := FindAll()
-	json.NewEncoder(w).Encode(pls)
+	utils.Json(w, pls)
 }
 
 func CreateHandler(w http.ResponseWriter, r *http.Request) {
-	id := chi.URLParam(r, "id")
-	pl := FindOne(id)
-	json.NewEncoder(w).Encode(pl)
+	pl, err := getPlFromBody(r)
+	if err != nil {
+		http.Error(w, err.Error(), 400)
+		return
+	}
+	newPl := Create(pl)
+	utils.Json(w, newPl)
 }
 
 func RetrieveHandler(w http.ResponseWriter, r *http.Request) {
-	id := chi.URLParam(r, "id")
-	pl := FindOne(id)
-	json.NewEncoder(w).Encode(pl)
-
+	pl := FindOne(chi.URLParam(r, "id"))
+	utils.Json(w, pl)
 }
 
 func DeleteHandler(w http.ResponseWriter, r *http.Request) {
-	pl := FindAll()
-	json.NewEncoder(w).Encode(pl)
+	deletedPl := Delete(chi.URLParam(r, "id"))
+	utils.Json(w, map[string]any{
+		"deleted": deletedPl,
+	})
 }

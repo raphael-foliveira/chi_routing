@@ -1,7 +1,6 @@
 package students
 
 import (
-	"encoding/json"
 	"net/http"
 
 	"github.com/go-chi/chi"
@@ -20,21 +19,21 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), 400)
 	}
 	newStudent := Create(student)
-	json.NewEncoder(w).Encode(newStudent)
+	utils.Json(w, newStudent)
 }
 
 func RetrieveHandler(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	st := FindOneWithProgrammingLanguages(id)
 
-	json.NewEncoder(w).Encode(st)
+	utils.Json(w, st)
 }
 
 func DeleteHandler(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	deletedStudent := Delete(id)
 
-	json.NewEncoder(w).Encode(map[string]any{
+	utils.Json(w, map[string]any{
 		"deleted": deletedStudent,
 	})
 }

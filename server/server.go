@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -18,5 +19,6 @@ func Run() {
 	}
 	database.RunDb()
 
+	fmt.Println("Server running on port 8000")
 	http.ListenAndServe(":8000", getMainRouter())
 }

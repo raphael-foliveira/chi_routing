@@ -35,12 +35,16 @@ var Db *sql.DB
 var err error
 
 func RunDb() {
-	Db, err = sql.Open("postgres", fmt.Sprintf("user=%s password=%s host=%s port=%s dbname=%s", getEnv()...))
+	Db, err = sql.Open("postgres", fmt.Sprintf("user=%s password=%s host=%s port=%s dbname=%s sslmode=disable", getEnv()...))
 	if err != nil {
 		log.Println("Error connecting to database")
 		panic(err)
 	}
 
-	Db.Exec(`set search_path='golang_server'`)
+	res, err := Db.Exec(`set search_path='golang_server'`)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(res)
 
 }

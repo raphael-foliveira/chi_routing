@@ -1,0 +1,24 @@
+services:
+  db:
+    build: ./db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_PORT=5432
+
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_TYPE=postgres
+      - DB_HOST=db
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=123
+      - DB_PORT=5432
+    depends_on:
+      - db
