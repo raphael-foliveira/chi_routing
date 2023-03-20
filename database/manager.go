@@ -3,7 +3,6 @@ package database
 import (
 	"database/sql"
 	"errors"
-	"fmt"
 	"reflect"
 )
 
@@ -17,23 +16,26 @@ func Manager(target interface{}) *manager {
 	}
 }
 
-func (m *manager) QueryRows(query string, params ...any) {
+func (m *manager) QueryRows(query string, params ...any) error {
 	rows, err := Db.Query(query, params...)
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
+	defer rows.Close()
 	err = m.ScanRows(rows)
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
+	return nil
 }
 
-func (m *manager) QueryRow(query string, params ...any) {
+func (m *manager) QueryRow(query string, params ...any) error {
 	row := Db.QueryRow(query, params...)
 	err := m.ScanRow(row)
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
+	return nil
 }
 
 func (m *manager) ScanRows(rows *sql.Rows) error {

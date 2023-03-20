@@ -24,8 +24,11 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) {
 
 func RetrieveHandler(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
-	st := FindOneWithProgrammingLanguages(id)
-
+	st, err := FindOneWithProgrammingLanguages(id)
+	if err != nil {
+		http.Error(w, err.Error(), 404)
+		return
+	}
 	utils.Json(w, st)
 }
 
