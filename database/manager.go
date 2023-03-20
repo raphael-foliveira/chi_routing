@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"reflect"
 )
 
@@ -19,19 +20,25 @@ func Manager(target interface{}) *manager {
 func (m *manager) QueryRows(query string, params ...any) {
 	rows, err := Db.Query(query, params...)
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
 	}
-	m.ScanRows(rows)
+	err = m.ScanRows(rows)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 func (m *manager) QueryRow(query string, params ...any) {
 	row := Db.QueryRow(query, params...)
-	m.ScanRow(row)
+	err := m.ScanRow(row)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 func (m *manager) ScanRows(rows *sql.Rows) error {
 	if reflect.TypeOf(m.target).Kind() != reflect.Ptr || reflect.TypeOf(m.target).Elem().Kind() != reflect.Slice {
-		return errors.New("Target must be a pointer to a slice")
+		return errors.New("target must be a pointer to a slice")
 	}
 
 	sliceVal := reflect.ValueOf(m.target).Elem() // []students.Student{} (value)
@@ -58,7 +65,7 @@ func (m *manager) ScanRows(rows *sql.Rows) error {
 
 func (m *manager) ScanRow(row *sql.Row) error {
 	if reflect.TypeOf(m.target).Kind() != reflect.Ptr || reflect.TypeOf(m.target).Elem().Kind() != reflect.Struct {
-		return errors.New("Target must be a pointer to a struct")
+		return errors.New("target must be a pointer to a struct")
 	}
 
 	structType := reflect.TypeOf(m.target).Elem()

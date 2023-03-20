@@ -1,6 +1,8 @@
 package students
 
 import (
+	"sync"
+
 	"github.com/raphael-foliveira/chi_routing/database"
 	"github.com/raphael-foliveira/chi_routing/programminglanguages"
 )
@@ -26,8 +28,23 @@ func FindStudentProgrammingLanguages(id string) []programminglanguages.Programmi
 }
 
 func FindOneWithProgrammingLanguages(id string) map[string]any {
-	student := FindOne(id)
-	studentPls := FindStudentProgrammingLanguages(id)
+	// student := FindOne(id)
+	// studentPls := FindStudentProgrammingLanguages(id)
+	sChannel := make(chan Student)
+	var wg sync.WaitGroup
+	wg.Add(2)
+	plsChannel := make(chan []programminglanguages.ProgrammingLanguage)
+	go func() {
+		defer wg.Done()
+		plsChannel <- FindStudentProgrammingLanguages(id)
+	}()
+	go func() {
+		defer wg.Done()
+		sChannel <- FindOne(id)
+	}()
+	student := <-sChannel
+	studentPls := <-plsChannel
+	wg.Wait()
 	return map[string]any{
 		"id":                   student.Id,
 		"firstName":            student.FirstName,
