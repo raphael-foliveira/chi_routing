@@ -28,23 +28,21 @@ func getEnv() []any {
 	if !found {
 		dbName = "golang_server"
 	}
-	return []any{dbUser, dbPassword, dbHost, dbPort, dbName}
+	searchPath, found := os.LookupEnv("DB_SEARCH_PATH")
+	if !found {
+		searchPath = "golang_server"
+	}
+	return []any{dbUser, dbPassword, dbHost, dbPort, dbName, searchPath}
 }
 
 var Db *sql.DB
 var err error
 
 func RunDb() {
-	Db, err = sql.Open("postgres", fmt.Sprintf("user=%s password=%s host=%s port=%s dbname=%s sslmode=disable", getEnv()...))
+	Db, err = sql.Open("postgres", fmt.Sprintf("user=%s password=%s host=%s port=%s dbname=%s sslmode=disable search_path=%s", getEnv()...))
 	if err != nil {
 		log.Println("Error connecting to database")
 		panic(err)
 	}
-
-	res, err := Db.Exec(`set search_path='golang_server'`)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(res)
 
 }
