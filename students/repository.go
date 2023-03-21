@@ -25,7 +25,7 @@ func FindOne(id string) (Student, error) {
 func FindStudentProgrammingLanguages(id string) ([]programminglanguages.ProgrammingLanguage, error) {
 	pls := []programminglanguages.ProgrammingLanguage{}
 	manager := database.Manager(&pls)
-	err := manager.QueryRows("select pl.id, pl.name, pl.difficulty from programminglanguage pl join student_programminglanguage sp on pl.id = sp.student where sp.student = $1", id)
+	err := manager.QueryRows("select pl.id, pl.name, pl.difficulty from programminglanguage pl join student_programminglanguage sp on pl.id = sp.programminglanguage where sp.student = $1", id)
 	if err != nil {
 		return nil, err
 	}
