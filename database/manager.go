@@ -56,7 +56,8 @@ func (m *manager) ScanRows(rows *sql.Rows) error {
 			scanVals[i] = structVal.Field(i).Addr().Interface()
 		}
 
-		if err := rows.Scan(scanVals...); err != nil {
+		err := rows.Scan(scanVals...)
+		if err != nil {
 			return err
 		}
 
@@ -78,10 +79,12 @@ func (m *manager) ScanRow(row *sql.Row) error {
 	for i := 0; i < numFields; i++ {
 		scanVals[i] = structVal.Field(i).Addr().Interface()
 	}
+
 	err := row.Scan(scanVals...)
 	if err != nil {
 		return err
 	}
+
 	reflect.ValueOf(m.target).Elem().Set(structVal) // put row values in `result`
 	return nil
 }
